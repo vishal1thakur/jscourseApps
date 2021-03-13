@@ -140,8 +140,10 @@ class App {
 
   //Remove form after submit
   _hideForm() {
+    // Empty inputs
     inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value =
       "";
+
     form.style.display = "none";
     form.classList.add("hidden");
     setTimeout(() => (form.style.display = "grid"), 1000);
@@ -201,7 +203,7 @@ class App {
     this._renderWorkout(workout);
 
     // Hide the form
-    this.hideForm();
+    this._hideForm();
 
     // Set local storage to all workouts
     this._setLocalStorage();
@@ -220,7 +222,7 @@ class App {
         })
       )
       .setPopupContent(
-        `workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️' ${workout.description}`
+        `${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description}`
       )
       .openPopup();
   }
