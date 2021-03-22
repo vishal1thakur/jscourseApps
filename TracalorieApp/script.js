@@ -208,7 +208,7 @@ const UICtrl = (function () {
   };
   // Public methods
   return {
-    // 1) Display all the stored items
+    // 2) Display all the stored items
     populateItemList: function (items) {
       let html = '';
       items.forEach(function (item) {
@@ -222,7 +222,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.itemList).innerHTML = html;
     },
 
-    // 2) Get the entered value
+    // 3) Get the entered value
     getItemInput: function () {
       return {
         name: document.querySelector(UISelectors.itemNameInput).value,
@@ -230,7 +230,7 @@ const UICtrl = (function () {
       };
     },
 
-    // 3) Add a new entry to display
+    // 4) Add a new entry to display
     addListItem: function (item) {
       // Show the list
       document.querySelector(UISelectors.itemList).style.display = 'block';
@@ -249,7 +249,7 @@ const UICtrl = (function () {
         .insertAdjacentElement('beforeend', li);
     },
 
-    // 4) Make the update on the entry
+    // 5) Make the update on the entry
     updateListItem: function (item) {
       let listItems = document.querySelectorAll(UISelectors.listItems);
 
@@ -268,20 +268,20 @@ const UICtrl = (function () {
       });
     },
 
-    // 5) Remove from display
+    // 6) Remove from display
     deleteListItem: function (id) {
       const itemID = `#item-${id}`;
       const item = document.querySelector(itemID);
       item.remove();
     },
 
-    // 6) Clear display
+    // 7) Clear display
     clearInput: function () {
       document.querySelector(UISelectors.itemNameInput).value = '';
       document.querySelector(UISelectors.itemCaloriesInput).value = '';
     },
 
-    // 7) Add to the input field when the user want to update an entry
+    // 8) Add to the input field when the user want to update an entry
     addItemToForm: function () {
       document.querySelector(
         UISelectors.itemNameInput
@@ -293,7 +293,7 @@ const UICtrl = (function () {
       UICtrl.showEditState();
     },
 
-    // 8) Remove items
+    // 9) Remove items
     removeItems: function () {
       let listItems = document.querySelectorAll(UISelectors.listItems);
 
@@ -305,19 +305,19 @@ const UICtrl = (function () {
       });
     },
 
-    // 9) Hide ul underline
+    // 10) Hide ul underline
     hideList: function () {
       document.querySelector(UISelectors.itemList).style.display = 'none';
     },
 
-    // 10) Display all calories
+    // 11) Display all calories
     showTotalCalories: function (totalCalories) {
       document.querySelector(
         UISelectors.totalCalories
       ).textContent = totalCalories;
     },
 
-    // 11) Remove entries made from the input field
+    // 12) Remove entries made from the input field
     clearEditState: function () {
       UICtrl.clearInput();
       document.querySelector(UISelectors.updateBtn).style.display = 'none';
@@ -326,7 +326,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.addBtn).style.display = 'inline';
     },
 
-    // 12) Add entries to input field for update
+    // 13) Add entries to input field for update
     showEditState: function () {
       document.querySelector(UISelectors.updateBtn).style.display = 'inline';
       document.querySelector(UISelectors.deleteBtn).style.display = 'inline';
@@ -334,7 +334,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.addBtn).style.display = 'none';
     },
 
-    // 13) Get all the selectors
+    // 14) Get all the selectors
     getSelectors: function () {
       return UISelectors;
     },
