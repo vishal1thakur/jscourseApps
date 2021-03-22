@@ -1,7 +1,8 @@
-//-------------- A) Storage Controller ----------------
+//-------------- A) Storage Controller (Get, Set and Delete data in the local storage) ----------------
 const StorageCtrl = (function () {
-  // PUblic methods
+  // Public methods
   return {
+    // 1) Store items entered by the user
     storeItem: function (item) {
       let items;
       // Check of any items in LS
@@ -21,6 +22,7 @@ const StorageCtrl = (function () {
       }
     },
 
+    // 2) Get the entries stored
     getItemsFromStorage: function () {
       let items;
       if (localStorage.getItem('items') === null) {
@@ -31,6 +33,7 @@ const StorageCtrl = (function () {
       return items;
     },
 
+    // 3) Change the updates made by the user on the added entry
     updateItemStorage: function (updatedItem) {
       let items = JSON.parse(localStorage.getItem('items'));
 
@@ -43,6 +46,7 @@ const StorageCtrl = (function () {
       localStorage.setItem('items', JSON.stringify(items));
     },
 
+    // 4) Remove the entries deleted by the user
     deleteItemFromStorage: function (id) {
       let items = JSON.parse(localStorage.getItem('items'));
 
@@ -55,36 +59,43 @@ const StorageCtrl = (function () {
       localStorage.setItem('items', JSON.stringify(items));
     },
 
+    // 5) Remove all entries from the LS
     clearItemsFromStorage: function () {
       localStorage.removeItem('items');
     },
   };
 })();
 
-//-------------- B) Item Controller -------------------
+//-------------- B) Item Controller (Data structure to store and manipulate the entries made by the user) -------------------
 const ItemCtrl = (function () {
-  // Item Constructor
+  // 1) Item Constructor
   const Item = function (id, name, calories) {
     this.id = id;
     this.name = name;
     this.calories = calories;
   };
 
-  // Data structures / State
+  // 2) Data structures / State
   const data = {
+    // Fetch item from LS
     items: StorageCtrl.getItemsFromStorage(),
     currentItem: null,
     totalCalories: 0,
   };
 
+  // Public Methods
   return {
+    // 3) Get the saved items
     getItems: function () {
       return data.items;
     },
+
+    // 4) Add a new entry in items
     addItem: function (name, calories) {
       let ID;
       // Create Id
       if (data.items.length > 0) {
+        // Get id of the last entry, add 1 to its id
         ID = data.items[data.items.length - 1].id + 1;
       } else {
         ID = 0;
@@ -102,6 +113,7 @@ const ItemCtrl = (function () {
       return newItem;
     },
 
+    // 5) Find a specific entry
     getItemById: function (id) {
       let found = null;
       // Loop through items
@@ -113,6 +125,7 @@ const ItemCtrl = (function () {
       return found;
     },
 
+    // 6) Update the changes made on entry
     updateItem: function (name, calories) {
       // Calories to number
       calories = parseInt(calories);
@@ -129,6 +142,7 @@ const ItemCtrl = (function () {
       return found;
     },
 
+    // 7) Remove an entry
     deleteItem: function (id) {
       // Get ids
       const ids = data.items.map(function (item) {
@@ -142,18 +156,22 @@ const ItemCtrl = (function () {
       data.items.splice(index, 1);
     },
 
+    // 8) Remove all entries
     clearAllItems: function () {
       data.items = [];
     },
 
+    // 9) Set the current item
     setCurrentItem: function (item) {
       data.currentItem = item;
     },
 
+    // 10) Fetch the current item
     getCurrentItem: function () {
       return data.currentItem;
     },
 
+    // 11) Calculate the total calories
     getTotalCalories: function () {
       let total = 0;
       // Loop through items and add cals
@@ -166,14 +184,16 @@ const ItemCtrl = (function () {
       return data.totalCalories;
     },
 
+    // 12) Get the entire datastructure
     logData: function () {
       return data;
     },
   };
 })();
 
-//-------------------- C) UI Controller -----------------
+//-------------------- C) UI Controller (Controller to manipulate what is displayed on the UI) -----------------
 const UICtrl = (function () {
+  // 1) All the selectors
   const UISelectors = {
     itemList: '#item-list',
     listItems: '#item-list li',
@@ -188,6 +208,7 @@ const UICtrl = (function () {
   };
   // Public methods
   return {
+    // 1) Display all the stored items
     populateItemList: function (items) {
       let html = '';
       items.forEach(function (item) {
@@ -201,6 +222,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.itemList).innerHTML = html;
     },
 
+    // 2) Get the entered value
     getItemInput: function () {
       return {
         name: document.querySelector(UISelectors.itemNameInput).value,
@@ -208,6 +230,7 @@ const UICtrl = (function () {
       };
     },
 
+    // 3) Add a new entry to display
     addListItem: function (item) {
       // Show the list
       document.querySelector(UISelectors.itemList).style.display = 'block';
@@ -226,6 +249,7 @@ const UICtrl = (function () {
         .insertAdjacentElement('beforeend', li);
     },
 
+    // 4) Make the update on the entry
     updateListItem: function (item) {
       let listItems = document.querySelectorAll(UISelectors.listItems);
 
@@ -244,17 +268,20 @@ const UICtrl = (function () {
       });
     },
 
+    // 5) Remove from display
     deleteListItem: function (id) {
       const itemID = `#item-${id}`;
       const item = document.querySelector(itemID);
       item.remove();
     },
 
+    // 6) Clear display
     clearInput: function () {
       document.querySelector(UISelectors.itemNameInput).value = '';
       document.querySelector(UISelectors.itemCaloriesInput).value = '';
     },
 
+    // 7) Add to the input field when the user want to update an entry
     addItemToForm: function () {
       document.querySelector(
         UISelectors.itemNameInput
@@ -266,6 +293,7 @@ const UICtrl = (function () {
       UICtrl.showEditState();
     },
 
+    // 8) Remove items
     removeItems: function () {
       let listItems = document.querySelectorAll(UISelectors.listItems);
 
@@ -277,16 +305,19 @@ const UICtrl = (function () {
       });
     },
 
+    // 9) Hide ul underline
     hideList: function () {
       document.querySelector(UISelectors.itemList).style.display = 'none';
     },
 
+    // 10) Display all calories
     showTotalCalories: function (totalCalories) {
       document.querySelector(
         UISelectors.totalCalories
       ).textContent = totalCalories;
     },
 
+    // 11) Remove entries made from the input field
     clearEditState: function () {
       UICtrl.clearInput();
       document.querySelector(UISelectors.updateBtn).style.display = 'none';
@@ -295,6 +326,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.addBtn).style.display = 'inline';
     },
 
+    // 12) Add entries to input field for update
     showEditState: function () {
       document.querySelector(UISelectors.updateBtn).style.display = 'inline';
       document.querySelector(UISelectors.deleteBtn).style.display = 'inline';
@@ -302,25 +334,26 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.addBtn).style.display = 'none';
     },
 
+    // 13) Get all the selectors
     getSelectors: function () {
       return UISelectors;
     },
   };
 })();
 
-//-------------------- D) App Controller ----------------
+//-------------------- D) App Controller (Central controller to tie in the app) ----------------
 const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
-  // Load event listeners
+  // 1) Load event listeners
   const loadEventListeners = function () {
     // Get UI selectors
     const UISelectors = UICtrl.getSelectors();
 
-    // Add item event
+    // 1a) Add item event
     document
       .querySelector(UISelectors.addBtn)
       .addEventListener('click', itemAddSubmit);
 
-    // disable submit on enter
+    // 1b) Disable submit on enter
     document.addEventListener('keypress', function (e) {
       if (e.keyCode === 13 || e.which === 13) {
         e.preventDefault();
@@ -328,33 +361,34 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
       }
     });
 
-    // Edit icon click event
+    // 1c) Edit icon click event
     document
       .querySelector(UISelectors.itemList)
       .addEventListener('click', itemEditClick);
 
-    // Update item event
+    // 1d) Update item event
     document
       .querySelector(UISelectors.updateBtn)
       .addEventListener('click', itemUpdateSubmit);
 
-    // Delete item event
+    // 1e) Delete item event
     document
       .querySelector(UISelectors.deleteBtn)
       .addEventListener('click', itemDeleteSubmit);
 
-    // Clear button event
+    // 1f) Clear button event
     document
       .querySelector(UISelectors.clearBtn)
       .addEventListener('click', clearAllItemsClick);
 
-    // Back button event
+    // 1g) Back button event
     document
       .querySelector(UISelectors.backBtn)
       .addEventListener('click', backClick);
   };
 
-  // Add item submit
+  // 2) Callback functions
+  // 2a) Add item submit
   const itemAddSubmit = function (e) {
     // Get from input from UI Controller
     const input = UICtrl.getItemInput();
@@ -378,7 +412,7 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
     e.preventDefault();
   };
 
-  // Edit item
+  // 2b) Edit item
   const itemEditClick = function (e) {
     if (e.target.classList.contains('edit-item')) {
       //
@@ -398,7 +432,7 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
     e.preventDefault();
   };
 
-  // Update item submit
+  // 2c) Update item submit
   const itemUpdateSubmit = function (e) {
     // Get item input
     const input = UICtrl.getItemInput();
@@ -422,13 +456,13 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
     e.preventDefault();
   };
 
-  // Back button
+  // 2d) Back button
   const backClick = function (e) {
     UICtrl.clearEditState();
     e.preventDefault();
   };
 
-  // Delete button event
+  // 2e) Delete button event
   const itemDeleteSubmit = function (e) {
     // Get current item
     const currentItem = ItemCtrl.getCurrentItem();
@@ -452,7 +486,7 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
     e.preventDefault();
   };
 
-  // Clear all items
+  // 2f) Clear all items
   const clearAllItemsClick = function () {
     // Delete all items from data structure
     ItemCtrl.clearAllItems();
@@ -472,7 +506,7 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
     UICtrl.hideList();
   };
 
-  // Public methods
+  // 3) Public methods
   return {
     init: function () {
       // Clear initial set
