@@ -353,7 +353,7 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
       .querySelector(UISelectors.addBtn)
       .addEventListener('click', itemAddSubmit);
 
-    // 1b) Disable submit on enter
+    // #) Disable submit on enter
     document.addEventListener('keypress', function (e) {
       if (e.keyCode === 13 || e.which === 13) {
         e.preventDefault();
@@ -361,27 +361,27 @@ const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
       }
     });
 
-    // 1c) Edit icon click event
+    // 1b) Edit icon click event
     document
       .querySelector(UISelectors.itemList)
       .addEventListener('click', itemEditClick);
 
-    // 1d) Update item event
+    // 1c) Update item event
     document
       .querySelector(UISelectors.updateBtn)
       .addEventListener('click', itemUpdateSubmit);
 
-    // 1e) Delete item event
+    // 1d) Delete item event
     document
       .querySelector(UISelectors.deleteBtn)
       .addEventListener('click', itemDeleteSubmit);
 
-    // 1f) Clear button event
+    // 1e) Clear button event
     document
       .querySelector(UISelectors.clearBtn)
       .addEventListener('click', clearAllItemsClick);
 
-    // 1g) Back button event
+    // 1f) Back button event
     document
       .querySelector(UISelectors.backBtn)
       .addEventListener('click', backClick);
