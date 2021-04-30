@@ -42,11 +42,17 @@ function generateHex() {
 // 2.2) Generate Random Colors and assign to bg & h2
 
 function randomColors() {
+  // Set the colors
+  initialColors = [];
   colorDivs.forEach((div, index) => {
     // Select the h2 of the div
     const hexText = div.children[0];
     // Generate a random hex
     const randomColor = generateHex();
+
+    // Add the color to the array
+    initialColors.push(chroma(randomColor).hex());
+
     // Add it to the text
     hexText.innerText = randomColor;
     // Add it to the bg
@@ -66,6 +72,8 @@ function randomColors() {
     // Get scale for sliders matching the bg - 2.4)
     colorizeSliders(color, hue, brightness, saturation);
   });
+  // Reset Inputs
+  resetInputs();
 }
 
 // 2.3) Check contrast of bg and change color of h2
@@ -99,20 +107,17 @@ function colorizeSliders(color, hue, brightness, saturation) {
   const scaleBright = chroma.scale(['black', midBright, 'white']);
 
   //Sat
-  // Add it to the sat bg
   saturation.style.backgroundImage = `linear-gradient(to right, ${scaleSat(
     0
   )}, ${scaleSat(1)})`;
 
   //Bright
-  // Add it to the sat bg
   brightness.style.backgroundImage = `linear-gradient(to right, ${scaleBright(
     0
   )}, ${scaleBright(0.5)} , ${scaleBright(1)})`;
 
   //Hue
-  // Add it to the sat bg
-  hue.style.backgroundImage = `linear-gradient(to right, rgb(204, 75, 75), rgb(204, 204, 75), rgb(75, 204, 75), rgb(75, 204, 204), rgb(75, 75, 204), rgb(204, 75, 204), rgb(204, 75, 75))`;
+  hue.style.backgroundImage = `linear-gradient(to right, rgb(204,75,75),rgb(204,204,75),rgb(75,204,75),rgb(75,204,204),rgb(75,75,204),rgb(204,75,204),rgb(204,75,75))`;
 }
 
 // 2.5) Change bg with hsb - 1.1
@@ -124,14 +129,14 @@ function hslControls(e) {
     e.target.getAttribute('data-hue');
 
   // Get all three values when clicked on any one
-  const sliders = e.target.parentElement.querySelectorAll('input[type="range"');
+  let sliders = e.target.parentElement.querySelectorAll('input[type="range"');
   // Get individual one
   const hue = sliders[0];
   const brightness = sliders[1];
   const saturation = sliders[2];
 
   // Get hex text of the bg
-  const bgColor = colorDivs[index].querySelector('h2').innerText;
+  const bgColor = initialColors[index];
 
   // Change color
   let color = chroma(bgColor)
@@ -141,6 +146,9 @@ function hslControls(e) {
 
   // Assign it to bg
   colorDivs[index].style.backgroundColor = color;
+
+  //Colorize inputs/sliders
+  colorizeSliders(color, hue, brightness, saturation);
 }
 
 // 2.6) Update text of the color div - 1.2
@@ -161,6 +169,36 @@ function updateTextUI(index) {
   for (icon of icons) {
     checkTextContrast(color, icon);
   }
+}
+
+// 2.7) Reset initial color
+function resetInputs() {
+  // get all the sliders
+  const sliders = document.querySelectorAll('.sliders input');
+  // loop through each
+  sliders.forEach((slider) => {
+    if (slider.name === 'hue') {
+      // get the specific hue
+      const hueColor = initialColors[slider.getAttribute('data-hue')];
+      // assign it to chroma
+      const hueValue = chroma(hueColor).hsl()[0];
+      slider.value = Math.floor(hueValue);
+    }
+    if (slider.name === 'brightness') {
+      // get the specific hue
+      const brightColor = initialColors[slider.getAttribute('data-bright')];
+      // assign it to chroma
+      const brightValue = chroma(brightColor).hsl()[2];
+      slider.value = Math.floor(brightValue * 100) / 100;
+    }
+    if (slider.name === 'saturation') {
+      // get the specific saturation
+      const satColor = initialColors[slider.getAttribute('data-sat')];
+      // assign it to chroma
+      const satValue = chroma(satColor).hsl()[1];
+      slider.value = satValue;
+    }
+  });
 }
 
 // 3) Call the functions
