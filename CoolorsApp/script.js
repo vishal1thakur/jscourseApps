@@ -37,8 +37,20 @@ function randomColors() {
     hexText.innerText = randomColor;
     // Add it to the bg
     div.style.backgroundColor = randomColor;
+
     // Check for contrast - 2.3)
     checkTextContrast(randomColor, hexText);
+    // Initialize colorize sliders
+    const color = chroma(randomColor);
+    // Get all the sliders in a nodelist
+    const sliders = div.querySelectorAll('.sliders input');
+    // Seperate the sliders
+    const hue = sliders[0];
+    const brightness = sliders[1];
+    const saturation = sliders[2];
+
+    // Get scale for sliders matching the bg - 2.4)
+    colorizeSliders(color, hue, brightness, saturation);
   });
 }
 
@@ -51,6 +63,42 @@ function checkTextContrast(color, text) {
   } else {
     text.style.color = 'white';
   }
+}
+
+// 2.4) Get scale for sliders matching the bg
+
+function colorizeSliders(color, hue, brightness, saturation) {
+  // Saturation
+  // Getting the min and max saturation of the color
+  //min
+  const noSat = color.set('hsl.s', 0);
+  //max
+  const fullSat = color.set('hsl.s', 1);
+  //create scale
+  const scaleSat = chroma.scale([noSat, color, fullSat]);
+
+  // Brightness
+  // Getting the mid brightness
+  //min
+  const midBright = color.set('hsl.l', 0.5);
+  //create scale
+  const scaleBright = chroma.scale(['black', midBright, 'white']);
+
+  //Sat
+  // Add it to the sat bg
+  saturation.style.backgroundImage = `linear-gradient(to right, ${scaleSat(
+    0
+  )}, ${scaleSat(1)})`;
+
+  //Bright
+  // Add it to the sat bg
+  brightness.style.backgroundImage = `linear-gradient(to right, ${scaleBright(
+    0
+  )}, ${scaleBright(0.5)} , ${scaleBright(1)})`;
+
+  //Hue
+  // Add it to the sat bg
+  hue.style.backgroundImage = `linear-gradient(to right, rgb(204, 75, 75), rgb(204, 204, 75), rgb(75, 204, 75), rgb(75, 204, 204), rgb(75, 75, 204), rgb(204, 75, 204), rgb(204, 75, 75))`;
 }
 
 // 3) Call the functions
