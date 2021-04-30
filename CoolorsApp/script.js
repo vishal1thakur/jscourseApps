@@ -6,7 +6,7 @@ const currentHexes = document.querySelectorAll('.color h2');
 
 // 2) Functions
 
-// 2.1) Color Generator
+// 2.1) Generator random hex
 
 function generateHex() {
   // Without Chromajs
@@ -25,7 +25,7 @@ function generateHex() {
   return hexColor;
 }
 
-// 2.2) Random Colors
+// 2.2) Generate Random Colors and assign to bg & h2
 
 function randomColors() {
   colorDivs.forEach((div, index) => {
@@ -37,7 +37,22 @@ function randomColors() {
     hexText.innerText = randomColor;
     // Add it to the bg
     div.style.backgroundColor = randomColor;
+    // Check for contrast - 2.3)
+    checkTextContrast(randomColor, hexText);
   });
 }
+
+// 2.3) Check contrast of bg and change color of h2
+
+function checkTextContrast(color, text) {
+  const luminance = chroma(color).luminance();
+  if (luminance > 0.5) {
+    text.style.color = 'black';
+  } else {
+    text.style.color = 'white';
+  }
+}
+
+// 3) Call the functions
 
 randomColors();
