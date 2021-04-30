@@ -3,6 +3,20 @@ const colorDivs = document.querySelectorAll('.color');
 const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type="range"]');
 const currentHexes = document.querySelectorAll('.color h2');
+let initialColors;
+
+// 1) Event Listeners
+// 1.1) HSB Sliders
+sliders.forEach((slider) => {
+  slider.addEventListener('input', hslControls);
+});
+
+// 1.2) Change text with slider values
+colorDivs.forEach((div, index) => {
+  div.addEventListener('change', () => {
+    updateTextUI(index);
+  });
+});
 
 // 2) Functions
 
@@ -99,6 +113,54 @@ function colorizeSliders(color, hue, brightness, saturation) {
   //Hue
   // Add it to the sat bg
   hue.style.backgroundImage = `linear-gradient(to right, rgb(204, 75, 75), rgb(204, 204, 75), rgb(75, 204, 75), rgb(75, 204, 204), rgb(75, 75, 204), rgb(204, 75, 204), rgb(204, 75, 75))`;
+}
+
+// 2.5) Change bg with hsb - 1.1
+function hslControls(e) {
+  //Get the specify color on which the hsb is being clicked
+  const index =
+    e.target.getAttribute('data-bright') ||
+    e.target.getAttribute('data-sat') ||
+    e.target.getAttribute('data-hue');
+
+  // Get all three values when clicked on any one
+  const sliders = e.target.parentElement.querySelectorAll('input[type="range"');
+  // Get individual one
+  const hue = sliders[0];
+  const brightness = sliders[1];
+  const saturation = sliders[2];
+
+  // Get hex text of the bg
+  const bgColor = colorDivs[index].querySelector('h2').innerText;
+
+  // Change color
+  let color = chroma(bgColor)
+    .set('hsl.s', saturation.value)
+    .set('hsl.l', brightness.value)
+    .set('hsl.h', hue.value);
+
+  // Assign it to bg
+  colorDivs[index].style.backgroundColor = color;
+}
+
+// 2.6) Update text of the color div - 1.2
+function updateTextUI(index) {
+  // Get the active div
+  const activeDiv = colorDivs[index];
+  // Set it in chroma
+  const color = chroma(activeDiv.style.backgroundColor);
+  // Get the h2
+  const textHex = activeDiv.querySelector('h2');
+  // Get the icons
+  const icons = activeDiv.querySelectorAll('.controls button');
+  // set the innertext
+  textHex.innerText = color.hex();
+  // check contrast for text
+  checkTextContrast(color, textHex);
+  // check contrast for icon
+  for (icon of icons) {
+    checkTextContrast(color, icon);
+  }
 }
 
 // 3) Call the functions
