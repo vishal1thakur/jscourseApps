@@ -1,4 +1,5 @@
 // 0) Global selection and variables
+// 0.1) General interactions
 const colorDivs = document.querySelectorAll('.color');
 const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type="range"]');
@@ -9,6 +10,14 @@ const adjustButton = document.querySelectorAll('.adjust');
 const closeAdjustments = document.querySelectorAll('.close-adjustment');
 const sliderContainers = document.querySelectorAll('.sliders');
 let initialColors;
+
+// 0.2) Local Storage
+let savedPalettes = [];
+const saveBtn = document.querySelector('.save');
+const submitSave = document.querySelector('.submit-save');
+const closeSave = document.querySelector('.close-save');
+const saveContainer = document.querySelector('.save-container');
+const saveInput = document.querySelector('.save-container input');
 
 // 1) Event Listeners
 // 1.1) HSB Sliders
@@ -62,6 +71,15 @@ lockButton.forEach((button, index) => {
     lockLayer(e, index);
   });
 });
+
+// 1.9) Save palette
+saveBtn.addEventListener('click', openPalette);
+
+// 1.10) Close palette
+closeSave.addEventListener('click', closePalette);
+
+// 1.11) Submit save
+submitSave.addEventListener('click', savePalette);
 
 // 2) Functions
 
@@ -302,6 +320,50 @@ function lockLayer(e, index) {
   } else {
     e.target.innerHTML = '<i class="fas fa-lock-open"></i>';
   }
+}
+
+// 2.12 Save palette
+function openPalette(e) {
+  const popup = saveContainer.children[0];
+  saveContainer.classList.add('active');
+  popup.classList.add('active');
+}
+
+// 2.12 Close palette
+function closePalette(e) {
+  const popup = saveContainer.children[0];
+  saveContainer.classList.remove('active');
+  popup.classList.remove('active');
+}
+
+// 2.13 Save to ls
+function savetoLocal(paletteObj) {
+  let localPalettes;
+  if (localStorage.getItem('palettes') === null) {
+    localPalettes = [];
+  } else {
+    localPalettes = JSON.parse(localStorage.getItem('palettes'));
+  }
+  localPalettes.push(paletteObj);
+  localStorage.setItem('palettes', JSON.stringify(localPalettes));
+}
+
+// 2.14 Save palette
+function savePalette(e) {
+  saveContainer.classList.remove('active');
+  popup.classList.remove('active');
+  const name = saveInput.value;
+  const colors = [];
+  currentHexes.forEach((hex) => {
+    colors.push(hex.innerText);
+  });
+  // Generate object
+  let paletteNr = savedPalettes.length;
+  const paletteObj = {name, colors, nr: paletteNr};
+  savedPalettes.push(paletteObj);
+  // savve to ls
+  savetoLocal(paletteObj);
+  saveInput.value = '';
 }
 
 // 3) Call the functions
