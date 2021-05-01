@@ -367,7 +367,13 @@ function savePalette(e) {
     colors.push(hex.innerText);
   });
   // Generate object
-  let paletteNr = savedPalettes.length;
+  let paletteNr;
+  const paletteObjects = JSON.parse(localStorage.getItem('palettes'));
+  if (paletteObjects) {
+    paletteNr = paletteObjects.length;
+  } else {
+    paletteNr = savedPalettes.length;
+  }
   const paletteObj = {name, colors, nr: paletteNr};
   savedPalettes.push(paletteObj);
   // save to ls
@@ -429,9 +435,11 @@ function closeLibrary() {
 // 2.17) Library input update
 function getLocal() {
   if (localStorage.getItem('palettes') === null) {
-    localStorage = [];
+    localPalletes = [];
   } else {
     const paletteObjects = JSON.parse(localStorage.getItem('palettes'));
+
+    savedPalettes = [...paletteObjects];
     paletteObjects.forEach((paletteObj) => {
       // generate palette for library
       const palette = document.createElement('div');
