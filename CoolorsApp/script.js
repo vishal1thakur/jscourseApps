@@ -56,6 +56,13 @@ closeAdjustments.forEach((button, index) => {
 // 1.7) Generate colors
 generateBtn.addEventListener('click', randomColors);
 
+// 1.8) Lock feature
+lockButton.forEach((button, index) => {
+  button.addEventListener('click', (e) => {
+    lockLayer(e, index);
+  });
+});
+
 // 2) Functions
 
 // 2.1) Generator random hex
@@ -80,8 +87,8 @@ function generateHex() {
 // 2.2) Generate Random Colors and assign to bg & h2
 
 function randomColors() {
-  // Set the colors
   initialColors = [];
+  // Set the colors
   colorDivs.forEach((div, index) => {
     // Select the h2 of the div
     const hexText = div.children[0];
@@ -89,7 +96,14 @@ function randomColors() {
     const randomColor = generateHex();
 
     // Add the color to the array
-    initialColors.push(chroma(randomColor).hex());
+    if (div.classList.contains('locked')) {
+      // if the color is locked
+      initialColors.push(hexText.innerText);
+      return;
+    } else {
+      // if the color is not locked, create new
+      initialColors.push(chroma(randomColor).hex());
+    }
 
     // Add it to the text
     hexText.innerText = randomColor;
@@ -275,6 +289,19 @@ function openAdjustmentPanel(index) {
 // 2.10) Close HSB panel
 function closeAdjustmentPanel(index) {
   sliderContainers[index].classList.remove('active');
+}
+
+// 2.11) Lock Feature
+function lockLayer(e, index) {
+  const lockSVG = e.target.children[0];
+  const activeBg = colorDivs[index];
+  activeBg.classList.toggle('locked');
+
+  if (lockSVG.classList.contains('fa-lock-open')) {
+    e.target.innerHTML = '<i class="fas fa-lock"></i>';
+  } else {
+    e.target.innerHTML = '<i class="fas fa-lock-open"></i>';
+  }
 }
 
 // 3) Call the functions
