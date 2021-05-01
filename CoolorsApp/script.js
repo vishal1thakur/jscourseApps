@@ -390,6 +390,21 @@ function savePalette(e) {
   paletteBtn.classList.add(paletteObj.nr);
   paletteBtn.innerText = 'select';
 
+  // attach event to the btn
+  paletteBtn.addEventListener('click', (e) => {
+    closeLibrary();
+    const paletteIndex = e.target.classList[1];
+    initialColors = [];
+    savedPalettes[paletteIndex].colors.forEach((color, index) => {
+      initialColors.push(color);
+      colorDivs[index].style.backgroundColor = color;
+      const text = colorDivs[index].children[0];
+      checkTextContrast(color, text);
+      updateTextUI(index);
+    });
+    libraryInputUpdate();
+  });
+
   // append to the library
   palette.appendChild(title);
   palette.appendChild(preview);
@@ -410,6 +425,8 @@ function closeLibrary() {
   libraryContainer.classList.remove('active');
   popup.classList.remove('active');
 }
+
+// 2.17) Library input update
 
 // 3) Call the functions
 
