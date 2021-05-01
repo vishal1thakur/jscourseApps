@@ -4,6 +4,7 @@ const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type="range"]');
 const currentHexes = document.querySelectorAll('.color h2');
 const popup = document.querySelector('.copy-container');
+const lockButton = document.querySelectorAll('.lock');
 const adjustButton = document.querySelectorAll('.adjust');
 const closeAdjustments = document.querySelectorAll('.close-adjustment');
 const sliderContainers = document.querySelectorAll('.sliders');
@@ -51,6 +52,9 @@ closeAdjustments.forEach((button, index) => {
     closeAdjustmentPanel(index);
   });
 });
+
+// 1.7) Generate colors
+generateBtn.addEventListener('click', randomColors);
 
 // 2) Functions
 
@@ -108,6 +112,11 @@ function randomColors() {
   });
   // Reset Inputs
   resetInputs();
+  // Check for button contrast
+  adjustButton.forEach((button, index) => {
+    checkTextContrast(initialColors[index], button);
+    checkTextContrast(initialColors[index], lockButton[index]);
+  });
 }
 
 // 2.3) Check contrast of bg and change color of h2
