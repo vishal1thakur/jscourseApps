@@ -1,8 +1,12 @@
-// Global selection and variables
+// 0) Global selection and variables
 const colorDivs = document.querySelectorAll('.color');
 const generateBtn = document.querySelector('.generate');
 const sliders = document.querySelectorAll('input[type="range"]');
 const currentHexes = document.querySelectorAll('.color h2');
+const popup = document.querySelector('.copy-container');
+const adjustButton = document.querySelectorAll('.adjust');
+const closeAdjustments = document.querySelectorAll('.close-adjustment');
+const sliderContainers = document.querySelectorAll('.sliders');
 let initialColors;
 
 // 1) Event Listeners
@@ -15,6 +19,36 @@ sliders.forEach((slider) => {
 colorDivs.forEach((div, index) => {
   div.addEventListener('change', () => {
     updateTextUI(index);
+  });
+});
+
+// 1.3) Copy to clipbaord on clicking text
+currentHexes.forEach((hex) => {
+  hex.addEventListener('click', () => {
+    copyToClipboard(hex);
+  });
+});
+
+// 1.4) Close popup animation ater finishing transition
+popup.addEventListener('transitionend', () => {
+  // select child
+  const popupBox = popup.children[0];
+  // remove the class
+  popup.classList.remove('active');
+  popupBox.classList.remove('active');
+});
+
+// 1.5) Adjust the HSB of the color
+adjustButton.forEach((button, index) => {
+  button.addEventListener('click', () => {
+    openAdjustmentPanel(index);
+  });
+});
+
+// 1.6) Close HSB panel
+closeAdjustments.forEach((button, index) => {
+  button.addEventListener('click', () => {
+    closeAdjustmentPanel(index);
   });
 });
 
@@ -199,6 +233,39 @@ function resetInputs() {
       slider.value = satValue;
     }
   });
+}
+
+// 2.8) Copy hexcode to clipbaord
+function copyToClipboard(hex) {
+  // create a psuedo element to copy - a textarea on hex
+  const el = document.createElement('textarea');
+  // give it the value of hex
+  el.value = hex.innerText;
+  // append to body
+  document.body.appendChild(el);
+  // select it
+  el.select();
+  // copy it
+  document.execCommand('copy');
+  // remove it
+  document.body.removeChild(el);
+
+  // Pop up animation
+  // select child
+  const popupBox = popup.children[0];
+  // add class
+  popup.classList.add('active');
+  popupBox.classList.add('active');
+}
+
+// 2.9) Open HSB panel
+function openAdjustmentPanel(index) {
+  sliderContainers[index].classList.toggle('active');
+}
+
+// 2.10) Close HSB panel
+function closeAdjustmentPanel(index) {
+  sliderContainers[index].classList.remove('active');
 }
 
 // 3) Call the functions
