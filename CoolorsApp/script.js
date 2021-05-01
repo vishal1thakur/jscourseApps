@@ -402,7 +402,7 @@ function savePalette(e) {
       checkTextContrast(color, text);
       updateTextUI(index);
     });
-    libraryInputUpdate();
+    resetInputs();
   });
 
   // append to the library
@@ -427,7 +427,54 @@ function closeLibrary() {
 }
 
 // 2.17) Library input update
+function getLocal() {
+  if (localStorage.getItem('palettes') === null) {
+    localStorage = [];
+  } else {
+    const paletteObjects = JSON.parse(localStorage.getItem('palettes'));
+    paletteObjects.forEach((paletteObj) => {
+      // generate palette for library
+      const palette = document.createElement('div');
+      palette.classList.add('custom-palette');
+      const title = document.createElement('h4');
+      title.innerText = paletteObj.name;
+      const preview = document.createElement('div');
+      preview.classList.add('small-preview');
+      paletteObj.colors.forEach((smallColor) => {
+        const smallDiv = document.createElement('div');
+        smallDiv.style.backgroundColor = smallColor;
+        preview.appendChild(smallDiv);
+      });
+      const paletteBtn = document.createElement('button');
+      paletteBtn.classList.add('pick-palette-btn');
+      paletteBtn.classList.add(paletteObj.nr);
+      paletteBtn.innerText = 'select';
+
+      // attach event to the btn
+      paletteBtn.addEventListener('click', (e) => {
+        closeLibrary();
+        const paletteIndex = e.target.classList[1];
+        initialColors = [];
+        paletteObjects[paletteIndex].colors.forEach((color, index) => {
+          initialColors.push(color);
+          colorDivs[index].style.backgroundColor = color;
+          const text = colorDivs[index].children[0];
+          checkTextContrast(color, text);
+          updateTextUI(index);
+        });
+        resetInputs();
+      });
+
+      // append to the library
+      palette.appendChild(title);
+      palette.appendChild(preview);
+      palette.appendChild(paletteBtn);
+      libraryContainer.children[0].appendChild(palette);
+    });
+  }
+}
 
 // 3) Call the functions
 
+getLocal();
 randomColors();
