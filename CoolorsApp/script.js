@@ -282,6 +282,7 @@ function resetInputs() {
       const satValue = chroma(satColor).hsl()[1];
       slider.value = satValue;
     }
+    colorizeSliders(color, hue, brightness, saturation);
   });
 }
 
@@ -320,10 +321,12 @@ function closeAdjustmentPanel(index) {
 
 // 2.11) Lock Feature
 function lockLayer(e, index) {
+  // select element
   const lockSVG = e.target.children[0];
   const activeBg = colorDivs[index];
+  // add locked class on the bg
   activeBg.classList.toggle('locked');
-
+  // change the icon
   if (lockSVG.classList.contains('fa-lock-open')) {
     e.target.innerHTML = '<i class="fas fa-lock"></i>';
   } else {
@@ -331,21 +334,21 @@ function lockLayer(e, index) {
   }
 }
 
-// 2.12 Save palette
+// 2.12) Save palette
 function openPalette(e) {
   const popup = saveContainer.children[0];
   saveContainer.classList.add('active');
   popup.classList.add('active');
 }
 
-// 2.12 Close palette
+// 2.13) Close palette
 function closePalette(e) {
   const popup = saveContainer.children[0];
   saveContainer.classList.remove('active');
   popup.classList.remove('active');
 }
 
-// 2.13 Save to ls
+// 2.14) Save to ls
 function savetoLocal(paletteObj) {
   let localPalettes;
   if (localStorage.getItem('palettes') === null) {
@@ -357,29 +360,39 @@ function savetoLocal(paletteObj) {
   localStorage.setItem('palettes', JSON.stringify(localPalettes));
 }
 
-// 2.14 Save palette
+// 2.15) Save palette
 function savePalette(e) {
+  // hide the save popup
   saveContainer.classList.remove('active');
   popup.classList.remove('active');
+  // get the name input
   const name = saveInput.value;
+  // create an empty store
   const colors = [];
+  // push the current color hexes to the empty store
   currentHexes.forEach((hex) => {
     colors.push(hex.innerText);
   });
   // Generate object
   let paletteNr;
+  // Get the saved data from ls
   const paletteObjects = JSON.parse(localStorage.getItem('palettes'));
+  // Make the new entry the latest number, so that the placement is not disturbed
   if (paletteObjects) {
     paletteNr = paletteObjects.length;
   } else {
     paletteNr = savedPalettes.length;
   }
+  // create new entry
   const paletteObj = {name, colors, nr: paletteNr};
+  // push new entry
   savedPalettes.push(paletteObj);
   // save to ls
   savetoLocal(paletteObj);
+  // clear input field
   saveInput.value = '';
   // generate palette for library
+  // html css for the library entry
   const palette = document.createElement('div');
   palette.classList.add('custom-palette');
   const title = document.createElement('h4');
@@ -398,9 +411,13 @@ function savePalette(e) {
 
   // attach event to the btn
   paletteBtn.addEventListener('click', (e) => {
+    // close library ui
     closeLibrary();
+    // select the entry
     const paletteIndex = e.target.classList[1];
+    // reset the colors
     initialColors = [];
+    // loop through the colors and display
     savedPalettes[paletteIndex].colors.forEach((color, index) => {
       initialColors.push(color);
       colorDivs[index].style.backgroundColor = color;
@@ -418,28 +435,31 @@ function savePalette(e) {
   libraryContainer.children[0].appendChild(palette);
 }
 
-// 2.15) Open library
+// 2.16) Open library
 function openLibrary() {
   const popup = libraryContainer.children[0];
   libraryContainer.classList.add('active');
   popup.classList.add('active');
 }
 
-// 2.16) Close library
+// 2.17) Close library
 function closeLibrary() {
   const popup = libraryContainer.children[0];
   libraryContainer.classList.remove('active');
   popup.classList.remove('active');
 }
 
-// 2.17) Library input update
+// 2.18) Get data from LS
 function getLocal() {
+  // get data from ls
   if (localStorage.getItem('palettes') === null) {
     localPalletes = [];
   } else {
     const paletteObjects = JSON.parse(localStorage.getItem('palettes'));
 
+    // copy saved palettes
     savedPalettes = [...paletteObjects];
+    // loop through all entries
     paletteObjects.forEach((paletteObj) => {
       // generate palette for library
       const palette = document.createElement('div');
