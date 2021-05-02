@@ -282,7 +282,6 @@ function resetInputs() {
       const satValue = chroma(satColor).hsl()[1];
       slider.value = satValue;
     }
-    colorizeSliders(color, hue, brightness, saturation);
   });
 }
 
