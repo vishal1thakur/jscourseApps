@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/style.css" />
@@ -14,11 +19,40 @@
   </head>
   <body>
     <header>
-      <h2><a id="logo" href="./index.html">FreeFrames</a></h2>
-      <form action="" class="search-form">
-        <input type="text" name="search" class="search-input" />
-        <button type="submit" class="submit-btn">Search</button>
-      </form>
+      <div class="info">
+        <a href="">
+          <img class="image-svg" src="./img/info.svg" alt="" />
+        </a>
+      </div>
+      <div class="logo-container">
+        <a href="" id="logo" href="./index.html"
+          ><img class="logo" src="./img/logo.png" alt=""
+        /></a>
+      </div>
+      <div class="both-search">
+        <form action="" class="search-form search-form1 image">
+          <input
+            type="text"
+            name="search"
+            class="search-input1"
+            placeholder="Search Images..."
+          />
+          <button type="submit" class="submit-btn">
+            <img class="search-icon" src="./img/image.svg" alt="" />
+          </button>
+        </form>
+        <form action="" class="search-form search-form2 video">
+          <input
+            type="text"
+            name="search"
+            class="search-input2"
+            placeholder="Search Videos..."
+          />
+          <button type="submit" class="submit-btn">
+            <img class="search-icon" src="./img/video.svg" alt="" />
+          </button>
+        </form>
+      </div>
     </header>
     <main>
       <div class="gallery"></div>
