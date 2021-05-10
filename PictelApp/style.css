@@ -48,6 +48,11 @@ header h2 {
   margin-right: 3rem;
   margin-top: 0;
 }
+@media only screen and (max-width: 600px) {
+  .info {
+    display: none;
+  }
+}
 .image-svg {
   width: 35px;
 }
@@ -75,15 +80,33 @@ a {
   color: #001f2e;
 }
 
+@media only screen and (max-width: 600px) {
+  #logo {
+    margin-top: 1rem;
+  }
+}
+
 .both-search {
   display: flex;
   justify-content: space-evenly;
+}
+
+@media only screen and (max-width: 600px) {
+  .both-search {
+    flex-direction: column;
+  }
 }
 
 .search-form {
   padding: 1rem;
   display: flex;
   justify-content: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .search-form {
+    padding: 0.5rem;
+  }
 }
 
 .search-form input {
@@ -98,13 +121,33 @@ a {
   outline: none;
 }
 
+@media only screen and (max-width: 600px) {
+  .search-form input {
+    padding: 0.3rem 8rem 0.3rem 0.5rem;
+  }
+}
+
 .search-form input::placeholder {
   font-size: 1rem;
   color: rgb(131, 161, 163);
 }
 
+@media only screen and (max-width: 600px) {
+  .search-form input::placeholder {
+    font-size: 0.8rem;
+    color: rgb(131, 161, 163);
+  }
+}
+
 .search-icon {
   width: 25px;
+  color: white;
+}
+
+@media only screen and (max-width: 600px){
+
+  .search-icon {
+  width: 18px;
   color: white;
 }
 

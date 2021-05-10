@@ -25,6 +25,13 @@ header {
   align-items: center;
 }
 
+@media only screen and (max-width: 600px) {
+  header {
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+}
+
 .logo {
   font-family: 'Aladin', cursive;
   font-size: 3rem;
@@ -41,6 +48,13 @@ header {
   color: rgb(212, 212, 212);
 }
 
+@media only screen and (max-width: 600px) {
+  .colors {
+    flex-direction: column;
+    height: 40vh;
+  }
+}
+
 .color {
   height: 80vh;
   display: flex;
@@ -50,6 +64,12 @@ header {
   justify-content: space-evenly;
   position: relative;
   overflow: hidden;
+}
+@media only screen and (max-width: 600px) {
+  .color {
+    flex-direction: row;
+    overflow: none;
+  }
 }
 
 .color h2 {
@@ -80,6 +100,16 @@ header {
   pointer-events: all;
 }
 
+@media only screen and (max-width: 600px) {
+  .sliders {
+    display: none;
+  }
+  .sliders.active {
+    z-index: 1;
+    overflow: none;
+  }
+}
+
 .sliders button,
 .close-save,
 .close-library {
@@ -105,11 +135,27 @@ header {
   flex-direction: column;
 }
 
+@media only screen and (max-width: 600px) {
+  .controls {
+    flex-direction: row;
+  }
+  .adjust {
+    display: none;
+  }
+}
+
 .panel {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   height: 20vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .panel {
+    height: 15vh;
+    margin-bottom: 1rem;
+  }
 }
 
 .panel button {
