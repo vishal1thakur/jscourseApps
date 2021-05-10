@@ -144,11 +144,11 @@ a {
   color: white;
 }
 
-@media only screen and (max-width: 600px){
-
+@media only screen and (max-width: 600px) {
   .search-icon {
-  width: 18px;
-  color: white;
+    width: 18px;
+    color: white;
+  }
 }
 
 .search-form button {
