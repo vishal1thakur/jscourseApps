@@ -452,8 +452,9 @@ function closeLibrary() {
 // 2.18) Get data from LS
 function getLocal() {
     // get data from ls
+    let localPalettes;
     if (localStorage.getItem("palettes") === null) {
-        localPalletes = [];
+        localPalettes = [];
     } else {
         const paletteObjects = JSON.parse(localStorage.getItem("palettes"));
 
