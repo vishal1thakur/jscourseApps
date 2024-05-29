@@ -23,10 +23,10 @@ module.exports = {
             template: "./src/index.html",
         }),
         new ModuleFederationPlugin({
-            name: "rangeen",
+            name: "vanillaApp",
             filename: "remoteEntry.js",
             exposes: {
-                "./Rangeen": "./src/script.js",
+                "./VanillaApp": "./src/script.js",
             },
             shared: [],
         }),

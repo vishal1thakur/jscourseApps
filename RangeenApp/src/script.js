@@ -509,13 +509,13 @@ randomColors();
 
 // 4) Webpack integration
 
-const loadRangeen = () => {
+const loadVanillaApp = () => {
     const app = document.getElementById("app");
     app.innerHTML = "<h1>Hello, Vanilla JS App!</h1>";
 };
 
 // Automatically load the app on DOMContentLoaded
-document.addEventListener("DOMContentLoaded", loadRangeen);
+document.addEventListener("DOMContentLoaded", loadVanillaApp);
 
 // Export the function for Module Federation
-export default loadRangeen;
+export default loadVanillaApp;
