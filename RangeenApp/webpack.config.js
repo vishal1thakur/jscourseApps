@@ -8,7 +8,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "bundle.js",
-        publicPath: "./", // Adjust this if your deployment URL differs
+        publicPath: "https://rangeen.netlify.app/", // Adjust this if your deployment URL differs
     },
     mode: "production",
     module: {
