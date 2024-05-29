@@ -1,20 +1,21 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: "./src/script.js",
     output: {
         path: path.resolve(__dirname, "dist"),
         filename: "bundle.js",
-        publicPath: "https://rangeen.netlify.app/", // Adjust this if your deployment URL differs
+        publicPath: "./", // Adjust this if your deployment URL differs
     },
     mode: "production",
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: ["style-loader", "css-loader"],
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
         ],
     },
@@ -29,6 +30,9 @@ module.exports = {
                 "./VanillaApp": "./src/script.js",
             },
             shared: [],
+        }),
+        new MiniCssExtractPlugin({
+            filename: "bundle.css",
         }),
     ],
 };
