@@ -1,6 +1,6 @@
 // 0) Global selection and variables
 // 0.1) General interactions
-import "./style.css";
+import "./css/style.css";
 const colorDivs = document.querySelectorAll(".color");
 const generateBtn = document.querySelector(".generate");
 const sliders = document.querySelectorAll('input[type="range"]');

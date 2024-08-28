@@ -1,0 +1,372 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-top: 62px;
+    font-family: "Poppins", sans-serif;
+    color: rgb(51, 51, 51);
+}
+
+button {
+    font-family: "Poppins", sans-serif;
+}
+
+path,
+i,
+svg {
+    pointer-events: none;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.logo {
+    font-family: "Aladin", cursive;
+    font-size: 3rem;
+}
+
+.info-image {
+    width: 50px;
+    margin-left: 5rem;
+}
+
+/* Color Section Styles */
+.colors {
+    min-height: 80vh;
+    display: flex;
+    color: rgb(212, 212, 212);
+}
+
+.color {
+    height: 80vh;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    overflow: hidden;
+}
+
+.color h2 {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* Slider Styles */
+.sliders {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0%;
+    background: white;
+    padding: 1rem;
+    width: 80%;
+    border-top-right-radius: 1rem;
+    pointer-events: none;
+    border-top-left-radius: 1rem;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.5s ease-in-out;
+}
+
+.sliders.active {
+    opacity: 1;
+    transform: translateY(0px);
+    pointer-events: all;
+}
+
+.sliders button,
+.close-save,
+.close-library {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: none;
+    background: none;
+    color: rgb(31, 33, 63);
+    cursor: pointer;
+    font-weight: 900;
+    padding: 0.5rem 1rem;
+}
+
+.sliders span {
+    color: rgb(31, 33, 63);
+}
+
+/* Control Panel Styles */
+.controls {
+    display: flex;
+    flex-direction: column;
+}
+
+.panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 20vh;
+}
+
+.panel button {
+    font-size: 1rem;
+    margin: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 1rem 2.5rem;
+    background: rgb(31, 33, 63);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 1rem;
+}
+
+.panel p {
+    font-size: 1rem;
+}
+
+.library-panel,
+.generate-panel,
+.save-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.adjust,
+.lock {
+    font-size: 2rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin: 2rem 0rem;
+}
+
+/* Range Input Styles */
+input[type="range"] {
+    -webkit-appearance: none;
+    margin: 1rem 0rem;
+    width: 100%;
+    position: relative;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+/* Popup Styles */
+.copy-container,
+.save-container,
+.library-container {
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.copy-popup,
+.save-popup,
+.library-popup {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 2rem;
+    transition: transform 0.5s ease;
+    transform: translateY(-2rem);
+    min-width: 30%;
+    min-height: 30vh;
+}
+
+.copy-popup h4,
+.save-popup h4,
+.library-popup h4 {
+    font-size: 1.2rem;
+    padding: 2rem;
+}
+
+.submit-di {
+    display: flex;
+}
+
+.copy-container.active,
+.save-container.active,
+.library-container.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.copy-popup.active,
+.save-popup.active,
+.library-popup.active {
+    transform: translateY(0rem);
+}
+
+/* Save Popup Styles */
+.save-name {
+    font-size: 1.5rem;
+    padding: 1rem;
+}
+
+.submit-save {
+    margin: 2rem;
+    padding: 1rem 3rem;
+    background: rgb(46, 54, 97);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+.submit-close {
+    margin: 0rem;
+    padding: 0rem 3rem;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    color: rgb(46, 54, 97);
+    cursor: pointer;
+}
+
+input[type="text"] {
+    border: 1px solid rgb(41, 41, 41);
+    border-radius: 5px;
+}
+
+/* Library Popup Styles */
+.library-popup {
+    min-width: 40%;
+    padding: 1rem;
+    justify-content: flex-start;
+    overflow-y: scroll;
+    max-height: 50vh;
+}
+
+.custom-palette {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 2rem;
+}
+
+.small-preview {
+    display: flex;
+    flex: 1;
+}
+
+.custom-palette h4 {
+    flex: 1;
+}
+
+.small-preview div {
+    height: 5rem;
+    flex: 1;
+}
+
+.pick-palette-btn {
+    height: 5rem;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    background: rgb(39, 39, 39);
+    color: white;
+}
+
+/* Mobile Styles */
+@media only screen and (max-width: 600px) {
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    .logo {
+        font-size: 2.5rem;
+    }
+
+    header {
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    .colors {
+        flex-direction: column;
+        height: 0vh;
+        min-height: 72vh;
+        width: 100%;
+    }
+
+    .color {
+        height: 0vh;
+        flex-direction: row;
+        overflow: none;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .color h2 {
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .sliders {
+        display: none;
+    }
+
+    .sliders.active {
+        z-index: 1;
+        overflow: none;
+    }
+
+    .controls {
+        flex-direction: row;
+    }
+
+    .adjust {
+        display: none;
+    }
+
+    .lock {
+        font-size: 1.2rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+        margin: 1rem 0rem;
+    }
+
+    .panel {
+        height: 10vh;
+        margin-bottom: 1rem;
+    }
+
+    .panel button {
+        font-size: 0.8rem;
+        margin: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem 1.5rem;
+        background: rgb(31, 33, 63);
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 0.5rem;
+    }
+
+    .panel p {
+        font-size: 0.8rem;
+    }
+}
